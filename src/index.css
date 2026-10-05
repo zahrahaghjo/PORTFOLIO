@@ -1,0 +1,140 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Theme tokens. Light is the base; dark follows the system setting, or data-theme="dark" if you add a toggle. */
+:root {
+  --bg: #f6f4ff;
+  --surface: #ffffff;
+  --soft: #ece8ff;
+  --fg: #1b1633;
+  --muted: #5a5478;
+  --line: #d9d3f2;
+  --accent: #4b35c9;
+  --accent-fg: #ffffff;
+  --band: #4b35c9;
+  --band-2: #6a55e8;
+  --band-fg: #ffffff;
+  --band-muted: #d6cfff;
+  --band-line: rgba(255, 255, 255, 0.3);
+  --pop: #ffc83d;
+  --pop-fg: #1b1633;
+  --code-str: #0e6b55;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    --bg: #120f20;
+    --surface: #1c1833;
+    --soft: #262048;
+    --fg: #eeebfb;
+    --muted: #a9a4c8;
+    --line: #342e58;
+    --accent: #b3a6ff;
+    --accent-fg: #14102a;
+    --band: #3b2cb0;
+    --band-2: #5442d6;
+    --band-muted: #d2cbff;
+    --band-line: rgba(255, 255, 255, 0.28);
+    --code-str: #7dd8b4;
+    color-scheme: dark;
+  }
+}
+:root[data-theme='dark'] {
+  --bg: #120f20;
+  --surface: #1c1833;
+  --soft: #262048;
+  --fg: #eeebfb;
+  --muted: #a9a4c8;
+  --line: #342e58;
+  --accent: #b3a6ff;
+  --accent-fg: #14102a;
+  --band: #3b2cb0;
+  --band-2: #5442d6;
+  --band-muted: #d2cbff;
+  --band-line: rgba(255, 255, 255, 0.28);
+  --code-str: #7dd8b4;
+  color-scheme: dark;
+}
+
+@layer base {
+  html {
+    @apply motion-safe:scroll-smooth;
+  }
+  body {
+    @apply bg-bg font-body text-[1.0625rem] leading-[1.6] text-fg antialiased;
+  }
+  h1,
+  h2,
+  h3 {
+    @apply m-0 text-balance;
+  }
+  p {
+    @apply m-0;
+  }
+  :focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+  }
+}
+
+@layer components {
+  .wrap {
+    @apply mx-auto w-full max-w-6xl;
+    padding-inline: clamp(1rem, 4vw, 2rem);
+  }
+
+  /* Violet bands with an angled edge: one opens the page, one closes it. */
+  .band {
+    @apply relative isolate bg-band text-band-fg;
+  }
+  .band > * {
+    @apply relative z-[1];
+  }
+  .band :focus-visible {
+    outline-color: var(--pop);
+  }
+  .hero-band {
+    clip-path: polygon(0 0, 100% 0, 100% calc(100% - 3.5rem), 0 100%);
+    padding-block-end: 6.5rem;
+  }
+  .hero-band::before {
+    content: '';
+    position: absolute;
+    z-index: 0;
+    left: 35%;
+    right: 0;
+    bottom: 0;
+    height: 7rem;
+    background: var(--band-2);
+    clip-path: polygon(0 100%, 100% 0, 100% 100%);
+  }
+  .end-band {
+    clip-path: polygon(0 3.5rem, 100% 0, 100% 100%, 0 100%);
+    padding-block-start: 3.5rem;
+  }
+
+  .btn {
+    @apply inline-block cursor-pointer rounded-md border border-accent bg-accent px-5 py-[0.7rem] font-body text-[0.9375rem] font-semibold leading-[1.2] text-accent-fg no-underline transition hover:brightness-110;
+  }
+  .btn-ghost {
+    @apply border-line bg-transparent text-fg hover:border-accent hover:brightness-100;
+  }
+  .band .btn {
+    @apply border-pop bg-pop text-pop-fg;
+  }
+  .band .btn-ghost {
+    @apply border-band-line bg-transparent text-band-fg hover:border-pop;
+  }
+  .link {
+    @apply font-semibold text-accent underline-offset-4;
+  }
+  .band .link {
+    @apply text-pop;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition: none !important;
+  }
+}
