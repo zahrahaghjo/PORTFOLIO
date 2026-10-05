@@ -1,6 +1,7 @@
 # Zahra Haghjoo, personal site
 
 React + TypeScript + Tailwind CSS, built with Vite. All text lives in `src/data.ts`.
+🔗 **Live demo:** https://zahrahaghjo.github.io/PORTFOLIO/
 
 ## Run locally
 
